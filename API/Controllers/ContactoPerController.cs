@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Authorization;
 namespace API.Controllers;
 [ApiVersion("1.0")]
 [ApiVersion("1.1")]
-public class PersonaController : BaseApiController
+public class ContactoPerController : BaseApiController
 {
     private readonly IUnitOfWork unitofwork;
     private readonly IMapper mapper;
 
-    public PersonaController(IUnitOfWork unitofwork, IMapper mapper)
+    public ContactoPerController(IUnitOfWork unitofwork, IMapper mapper)
     {
         this.unitofwork = unitofwork;
         this.mapper = mapper;
@@ -26,10 +26,10 @@ public class PersonaController : BaseApiController
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<PersonaDto>>> Get()
+    public async Task<ActionResult<IEnumerable<ContactoPerDto>>> Get()
     {
-        var entidad = await unitofwork.Personas.GetAllAsync();
-        return mapper.Map<List<PersonaDto>>(entidad);
+        var entidad = await unitofwork.ContactoPers.GetAllAsync();
+        return mapper.Map<List<ContactoPerDto>>(entidad);
     }
 
     [HttpGet("{id}")]
@@ -37,23 +37,23 @@ public class PersonaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PersonaDto>> Get(int id)
+    public async Task<ActionResult<ContactoPerDto>> Get(int id)
     {
-        var entidad = await unitofwork.Personas.GetByIdAsync(id);
+        var entidad = await unitofwork.ContactoPers.GetByIdAsync(id);
         if (entidad == null)
         {
             return NotFound();
         }
-        return this.mapper.Map<PersonaDto>(entidad);
+        return this.mapper.Map<ContactoPerDto>(entidad);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Persona>> Post(PersonaDto entidadDto)
+    public async Task<ActionResult<ContactoPer>> Post(ContactoPerDto entidadDto)
     {
-        var entidad = this.mapper.Map<Persona>(entidadDto);
-        this.unitofwork.Personas.Add(entidad);
+        var entidad = this.mapper.Map<ContactoPer>(entidadDto);
+        this.unitofwork.ContactoPers.Add(entidad);
         await unitofwork.SaveAsync();
         if (entidad == null)
         {
@@ -68,14 +68,14 @@ public class PersonaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-    public async Task<ActionResult<PersonaDto>> Put(int id, [FromBody] PersonaDto entidadDto)
+    public async Task<ActionResult<ContactoPerDto>> Put(int id, [FromBody] ContactoPerDto entidadDto)
     {
         if (entidadDto == null)
         {
             return NotFound();
         }
-        var entidad = this.mapper.Map<Persona>(entidadDto);
-        unitofwork.Personas.Update(entidad);
+        var entidad = this.mapper.Map<ContactoPer>(entidadDto);
+        unitofwork.ContactoPers.Update(entidad);
         await unitofwork.SaveAsync();
         return entidadDto;
     }
@@ -84,35 +84,25 @@ public class PersonaController : BaseApiController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
     {
-        var entidad = await unitofwork.Personas.GetByIdAsync(id);
+        var entidad = await unitofwork.ContactoPers.GetByIdAsync(id);
         if (entidad == null)
         {
             return NotFound();
         }
-        unitofwork.Personas.Remove(entidad);
+        unitofwork.ContactoPers.Remove(entidad);
         await unitofwork.SaveAsync();
         return NoContent();
     }
-
     //consultas
-    [HttpGet("GetEmpleados")]
+    //devulveve los contacto por empleados
+    [HttpGet("GetNumByEmp")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<PersonaDto>>> GetEmpleados()
+    public async Task<ActionResult<IEnumerable<object>>> GetNumByEmp()
     {
-        var entidad = await unitofwork.Personas.GetEmpleados();
-        return mapper.Map<List<PersonaDto>>(entidad);
-    }
-
-    [HttpGet("GetVigilantes")]
-    [MapToApiVersion("1.0")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IEnumerable<PersonaDto>>> GetVigilantes()
-    {
-        var entidad = await unitofwork.Personas.GetVigilantes();
-        return mapper.Map<List<PersonaDto>>(entidad);
+        var entidad = await unitofwork.ContactoPers.GetNumByEmp();
+        return mapper.Map<List<object>>(entidad);
     }
 
     //metodos version 1.1
@@ -121,10 +111,10 @@ public class PersonaController : BaseApiController
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<PersonaDto>>> GetPagination([FromQuery] Params pagparams)
+    public async Task<ActionResult<Pager<ContactoPerDto>>> GetPagination([FromQuery] Params pagparams)
     {
-        var entidad = await unitofwork.Personas.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
-        var listEntidad = mapper.Map<List<PersonaDto>>(entidad.registros);
-        return new Pager<PersonaDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var entidad = await unitofwork.ContactoPers.GetAllAsync(pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
+        var listEntidad = mapper.Map<List<ContactoPerDto>>(entidad.registros);
+        return new Pager<ContactoPerDto>(listEntidad, entidad.totalRegistros, pagparams.PageIndex, pagparams.PageSize, pagparams.Search);
     }
 }
