@@ -8,20 +8,12 @@ public partial class Contrato : BaseEntity
     //public int Id { get; set; }
 
     public DateOnly FechaContrato { get; set; }
-
     public DateOnly FechaFin { get; set; }
-
     public int IdCliente { get; set; }
-
+    public Persona Cliente { get; set; }
     public int IdEmpleado { get; set; }
-
-    public int IdEstado { get; set; }
-
-    public virtual Persona Cliente { get; set; } = null!;
-
-    public virtual Persona Empleado { get; set; } = null!;
-
-    public virtual Estado Estado { get; set; } = null!;
-
-    public virtual ICollection<Programacion> Programaciones { get; set; } = new List<Programacion>();
+    public Persona Empleado { get; set; }
+    public int IdEstado { get; set; }    
+    public Estado Estado { get; set; }
+    public ICollection<Programacion> Programaciones { get; set; }
 }

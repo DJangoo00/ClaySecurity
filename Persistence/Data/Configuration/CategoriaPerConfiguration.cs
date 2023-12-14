@@ -12,7 +12,10 @@ public class CategoriaPerConfiguration : IEntityTypeConfiguration<CategoriaPer>
 
         builder.ToTable("categoriaper");
 
-        builder.Property(e => e.Id).HasColumnName("id");
+        builder.Property(e => e.Id)
+            .HasColumnType("int")
+            .HasColumnName("id");
+
         builder.Property(e => e.NombreCat)
             .HasMaxLength(50)
             .HasColumnName("nombreCat");

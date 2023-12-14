@@ -9,5 +9,5 @@ public partial class Pais : BaseEntity
 
     public string NombrePais { get; set; }
 
-    public virtual ICollection<Departamento> Departamentos { get; set; }
+    public ICollection<Departamento> Departamentos { get; set; }
 }

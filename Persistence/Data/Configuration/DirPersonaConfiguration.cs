@@ -23,14 +23,12 @@ public class DirPersonaConfiguration : IEntityTypeConfiguration<DirPersona>
         builder.Property(e => e.IdPersona).HasColumnName("idPersona");
         builder.Property(e => e.TipoDireccion).HasColumnName("idTDireccion");
 
-        builder.HasOne(d => d.IdPersonaNavigation).WithMany(p => p.Dirpersonas)
+        builder.HasOne(d => d.Persona).WithMany(p => p.DirPersonas)
             .HasForeignKey(d => d.IdPersona)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("dirpersona_ibfk_1");
 
         builder.HasOne(d => d.TipoDireccion).WithMany(p => p.DirPersonas)
             .HasForeignKey(d => d.TipoDireccion)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("dirpersona_ibfk_2");
     }
 }

@@ -8,7 +8,8 @@ public class ProgramacionConfiguration : IEntityTypeConfiguration<Programacion>
 {
     public void Configure(EntityTypeBuilder<Programacion> builder)
     {
-        builder.HasKey(e => e.Id).HasName("PRIMARY");
+        builder.HasKey(e => e.Id)
+            .HasName("PRIMARY");
 
         builder.ToTable("programacion");
 
@@ -18,24 +19,28 @@ public class ProgramacionConfiguration : IEntityTypeConfiguration<Programacion>
 
         builder.HasIndex(e => e.IdTurno, "idTurno");
 
-        builder.Property(e => e.Id).HasColumnName("id");
-        builder.Property(e => e.IdContrato).HasColumnName("idContacto");
-        builder.Property(e => e.IdEmpleado).HasColumnName("idEmpleado");
-        builder.Property(e => e.IdTurno).HasColumnName("idTurno");
+        builder.Property(e => e.Id)
+            .HasColumnName("id");
+
+        builder.Property(e => e.IdContrato)
+            .HasColumnName("idContacto");
+
+        builder.Property(e => e.IdEmpleado)
+            .HasColumnName("idEmpleado");
+
+        builder.Property(e => e.IdTurno)
+            .HasColumnName("idTurno");
 
         builder.HasOne(d => d.Contrato).WithMany(p => p.Programaciones)
             .HasForeignKey(d => d.IdContrato)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("programacion_ibfk_1");
 
         builder.HasOne(d => d.Empleado).WithMany(p => p.Programaciones)
             .HasForeignKey(d => d.IdEmpleado)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("programacion_ibfk_3");
 
         builder.HasOne(d => d.Turno).WithMany(p => p.Programaciones)
             .HasForeignKey(d => d.IdTurno)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("programacion_ibfk_2");
     }
 }

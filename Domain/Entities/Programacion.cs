@@ -13,9 +13,9 @@ public partial class Programacion : BaseEntity
 
     public int IdEmpleado { get; set; }
 
-    public virtual Contrato Contrato { get; set; } = null!;
+    public Contrato Contrato { get; set; }
 
-    public virtual Persona Empleado { get; set; } = null!;
+    public Persona Empleado { get; set; }
 
-    public virtual Turno Turno { get; set; } = null!;
+    public Turno Turno { get; set; }
 }

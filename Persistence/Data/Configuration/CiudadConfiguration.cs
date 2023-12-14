@@ -8,14 +8,16 @@ public class CiudadConfiguration : IEntityTypeConfiguration<Ciudad>
 {
     public void Configure(EntityTypeBuilder<Ciudad> builder)
     {
-        builder.HasKey(e => e.Id).HasName("PRIMARY");
-
         builder.ToTable("ciudad");
 
-        builder.HasIndex(e => e.IdDepartamento, "idDepartamento");
+        builder.HasKey(e => e.Id)
+            .HasName("PRIMARY");
 
         builder.Property(e => e.Id)
+            .HasColumnType("int")
             .HasColumnName("id");
+        
+        builder.HasIndex(e => e.IdDepartamento, "idDepartamento");
 
         builder.Property(e => e.IdDepartamento)
             .HasColumnName("idDepartamento");
@@ -27,7 +29,6 @@ public class CiudadConfiguration : IEntityTypeConfiguration<Ciudad>
         builder.HasOne(d => d.Departamento)
             .WithMany(p => p.Ciudades)
             .HasForeignKey(d => d.IdDepartamento)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("ciudad_ibfk_1");
     }
 }

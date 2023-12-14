@@ -34,17 +34,14 @@ public class PersonaConfiguration : IEntityTypeConfiguration<Persona>
 
         builder.HasOne(d => d.CategoriaPer).WithMany(p => p.Personas)
             .HasForeignKey(d => d.IdCat)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("persona_ibfk_2");
 
         builder.HasOne(d => d.Ciudad).WithMany(p => p.Personas)
             .HasForeignKey(d => d.IdCiudad)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("persona_ibfk_3");
 
         builder.HasOne(d => d.TipoPersona).WithMany(p => p.Personas)
             .HasForeignKey(d => d.IdTpersona)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("persona_ibfk_1");
     }
 }

@@ -22,7 +22,6 @@ public class DepartamentoConfiguration : IEntityTypeConfiguration<Departamento>
 
         builder.HasOne(d => d.Pais).WithMany(p => p.Departamentos)
             .HasForeignKey(d => d.IdPais)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("departamento_ibfk_1");
     }
 }

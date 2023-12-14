@@ -6,8 +6,6 @@ namespace Domain.Entities;
 public partial class TipoDireccion : BaseEntity
 {
     //public int Id { get; set; }
-
     public string Descripcion { get; set; }
-
-    public virtual ICollection<DirPersona> DirPersonas { get; set; }
+    public ICollection<DirPersona> DirPersonas { get; set; }
 }

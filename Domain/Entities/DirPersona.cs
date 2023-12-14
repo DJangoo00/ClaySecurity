@@ -10,10 +10,7 @@ public partial class DirPersona : BaseEntity
     public string Direccion { get; set; }
 
     public int IdPersona { get; set; }
-
+    public Persona Persona { get; set; }
     public int IdTDireccion { get; set; }
-
-    public virtual Persona IdPersonaNavigation { get; set; }
-
-    public virtual TipoDireccion TipoDireccion { get; set; }
+    public TipoDireccion TipoDireccion { get; set; }
 }

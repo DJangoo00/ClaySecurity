@@ -8,7 +8,8 @@ public class ContactoPerConfiguration : IEntityTypeConfiguration<ContactoPer>
 {
     public void Configure(EntityTypeBuilder<ContactoPer> builder)
     {
-        builder.HasKey(e => e.Id).HasName("PRIMARY");
+        builder.HasKey(e => e.Id)
+            .HasName("PRIMARY");
 
         builder.ToTable("contactoper");
 
@@ -34,13 +35,11 @@ public class ContactoPerConfiguration : IEntityTypeConfiguration<ContactoPer>
         builder.HasOne(d => d.Persona)
             .WithMany(p => p.ContactoPers)
             .HasForeignKey(d => d.IdPersona)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("contactoper_ibfk_1");
 
         builder.HasOne(d => d.TipoContacto)
             .WithMany(p => p.ContactoPers)
             .HasForeignKey(d => d.TipoContacto)
-            .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("contactoper_ibfk_2");
     }
 }

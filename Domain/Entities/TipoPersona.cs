@@ -6,8 +6,6 @@ namespace Domain.Entities;
 public partial class TipoPersona : BaseEntity
 {
     //public int Id { get; set; }
-
     public string Descripcion { get; set; }
-
-    public virtual ICollection<Persona> Personas { get; set; } = new List<Persona>();
+    public ICollection<Persona> Personas { get; set; }
 }

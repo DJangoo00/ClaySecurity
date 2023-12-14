@@ -2,7 +2,7 @@ CREATE DATABASE clay_security DEFAULT CHARACTER
 SET
     utf8;
 
-USE clay_security
+USE clay_security;
 
 CREATE TABLE
     pais (
@@ -121,4 +121,32 @@ CREATE TABLE
         FOREIGN KEY (idContrato) REFERENCES contrato(id),
         FOREIGN KEY (idTurno) REFERENCES turno(id),
         FOREIGN KEY (idEmpleado) REFERENCES persona(id)
+    );
+
+CREATE TABLE
+    `role` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `roleName` varchar(50) NOT NULL,
+        PRIMARY KEY (`id`)
+    );
+
+-- `user` definition
+CREATE TABLE
+    `user` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `nombre` varchar(50) NOT NULL,
+        `correo` varchar(100) NOT NULL,
+        `password` varchar(255) NOT NULL,
+        PRIMARY KEY (`id`)
+    );
+
+-- userrole definition
+CREATE TABLE
+    `userrole` (
+        `idUserFk` int NOT NULL,
+        `idRoleFk` int NOT NULL,
+        PRIMARY KEY (`idRoleFk`, `idUserFk`),
+        KEY `IX_userrole_IdUserFk` (`idUserFk`),
+        CONSTRAINT `FK_userrole_role_IdRoleFk` FOREIGN KEY (`idRoleFk`) REFERENCES `role` (`id`),
+        CONSTRAINT `FK_userrole_user_IdUserFk` FOREIGN KEY (`idUserFk`) REFERENCES `user` (`id`)
     );
